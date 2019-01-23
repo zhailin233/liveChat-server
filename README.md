@@ -1,1 +1,1 @@
-iveChat-server
+liveChat-server
