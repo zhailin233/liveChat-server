@@ -20,6 +20,13 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+const io = require('socket.io')(server);
+io.on('connection', (socket) => {
+  socket.on('sendmsg', (data) => {
+    const {from, to, msg} = data;
+    const chatid = [from, to].sort().join('_')
+  })
+})
 
 /**
  * Listen on provided port, on all network interfaces.
