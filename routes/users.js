@@ -121,10 +121,9 @@ router.get('/getmsglist', (req, res) => {
       }
     })
     Chat.find({"$or": [{from: userid}, {to: userid}]}, (err, doc) => {
-      console.log(doc)
       if (!err) {
         return res.json({
-          code: 1,
+          code: 0,
           data: doc,
           users
         })
@@ -140,6 +139,7 @@ router.post('/readmsg', (req, res) => {
   const {from} = req.body;
   Chat.update({from, to: userid},
     {'$set': {read: true}},
+    // {'multi':true},
     (err, doc) => {
       if (!err) {
         return res.json({
