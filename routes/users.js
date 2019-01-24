@@ -112,6 +112,7 @@ router.post('/update', (req, res) => {
 //查询聊天信息
 router.get('/getmsglist', (req, res) => {
   const userid = req.cookies.userid;
+  // console.log(userid)
   User.find({}, (err, userdoc) => {
     let users = {};
     userdoc.forEach( v => {
@@ -122,6 +123,7 @@ router.get('/getmsglist', (req, res) => {
     })
     Chat.find({"$or": [{from: userid}, {to: userid}]}, (err, doc) => {
       if (!err) {
+        // console.log(doc)
         return res.json({
           code: 0,
           data: doc,
@@ -142,7 +144,7 @@ router.post('/readmsg', (req, res) => {
     {'multi':true},
     (err, doc) => {
       if (!err) {
-        console.log(doc)
+        // console.log(doc)
         return res.json({
           code: 0,
           num: doc.nModified
