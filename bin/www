@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('end:server');
 var http = require('http');
+let model = require('../modules/module.js')
+let Chat = model.getModel('chat')
 
 /**
  * Get port from environment and store in Express.
@@ -25,6 +27,11 @@ io.on('connection', (socket) => {
   socket.on('sendmsg', (data) => {
     const {from, to, msg} = data;
     const chatid = [from, to].sort().join('_')
+    if (to) {
+      Chat.create({chatid, from, to, content: msg}, (err, doc) => {
+        io.emit('receivemsg', doc)
+      })
+    }
   })
 })
 

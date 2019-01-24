@@ -133,15 +133,16 @@ router.get('/getmsglist', (req, res) => {
   
 })
 
-// 获取聊天个数
+// 获取读过聊天个数
 router.post('/readmsg', (req, res) => {
   const userid = req.cookies.userid;
   const {from} = req.body;
   Chat.update({from, to: userid},
     {'$set': {read: true}},
-    // {'multi':true},
+    {'multi':true},
     (err, doc) => {
       if (!err) {
+        console.log(doc)
         return res.json({
           code: 0,
           num: doc.nModified
