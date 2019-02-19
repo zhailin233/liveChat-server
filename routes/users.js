@@ -39,7 +39,7 @@ router.post('/register', (req, res) => {
   })
 })
 
-// 登录
+// 登录   
 router.post('/login', (req, res) => {
   const {user, pwd} = req.body;
   User.findOne({user, pwd: md5Pwd(pwd)}, _filter, (err, doc) => {
